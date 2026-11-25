@@ -1,0 +1,113 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,geometry,microtype,hyperref}
+\geometry{margin=27mm}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newcommand{\DCW}{\operatorname{DCW}}
+\title{A Local Square Characterization of the Distance Cube Polynomial Identity in Induced Subgraphs of Hypercubes}
+\author{Ryutaro Yonezu}
+\date{25 November 2026 --- Research No. 87, v1.0}
+\begin{document}
+\maketitle
+\begin{center}\small NOT HUMAN PEER REVIEWED \enspace|\enspace NOVELTY INCONCLUSIVE\\ REFERENCES PARTIAL \enspace|\enspace All rights reserved\end{center}
+\begin{abstract}
+For an induced subgraph of a hypercube with its fixed coordinate embedding, we characterize the identity $D_G(x,q)=\DCW_G(x+q,q)$ by a local square-completion condition. Equivalently, equality of a single coefficient of the ordinary cube polynomial suffices. The criterion applies to the induced, origin-containing setting of a question posed by Mollard, and extends to arbitrary vertex sets with ambient-weight definitions. Under the criterion each connected component has a unique descending sink, with shortest paths to that sink of Hamming length, and its cubical complex is collapsible to a point. The general proofs are accompanied by exhaustive checks through dimension four and seeded tests through dimension eight. The published version of the motivating paper was not inspected in full; no priority claim is made.
+\end{abstract}
+\section{Setting and definitions}
+Let $F\subseteq\{0,1\}^n$ and $G=Q_n[F]$ be the induced subgraph in the fixed embedding. Identify vertices with subsets of $[n]$ and set
+\[
+ w(v)=|v|,\quad A(v)=\{i\in v:v\setminus\{i\}\in F\},\quad r(v)=|A(v)|.
+\]
+A coordinate cube $[b,t]=\{u:b\subseteq u\subseteq t\}$ has dimension $|t\setminus b|$. Every induced copy of $Q_k$ in $Q_n$ is such a cube: opposite edges of any 4-cycle flip the same coordinate, and propagation across parallel edges of $Q_k$ makes each direction a fixed ambient coordinate, distinct from the other directions. The cases $k=0,1$ are immediate. In an induced subgraph, containing all the vertices of a coordinate cube suffices to contain the cube.
+Define
+\[
+ D_G(x,q)=\sum_{[b,t]\subseteq F}x^{|t\setminus b|}q^{|b|},\qquad C_G(x)=D_G(x,1),
+\]
+\[
+ \DCW_G(d,z)=\sum_{v\in F}d^{r(v)}z^{w(v)-r(v)}.
+\]
+Distances here are ambient Hamming weights, not intrinsic distances for arbitrary $F$. For $0^n\in F$ this is the ambient-weight convention of Mollard~\cite{mollard}; for arbitrary $F$ it is an explicit extension. The first question following (5.1) in that preprint asks for the subgraphs satisfying the identity. We address the induced setting only; the published wording has not been verified.
+\section{Local characterization}
+\begin{theorem}\label{main}
+Let $F\subseteq\{0,1\}^n$ and $G=Q_n[F]$ be induced in the fixed embedding, with the ambient-weight definitions above. The following are equivalent:
+\begin{enumerate}\renewcommand{\labelenumi}{(\Alph{enumi})}
+\item $D_G(x,q)=\DCW_G(x+q,q)$.
+\item $C_G(x)=\DCW_G(x+1,1)$.
+\item $[x^2]C_G(x)=\displaystyle\sum_{v\in F}\binom{r(v)}{2}$.
+\item For every $v\in F$ and distinct $i,j\in A(v)$, $v\setminus\{i,j\}\in F$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+Every $k$-cube has a unique top $v$ and a free set $S\subseteq A(v)$ of size $k$, contributing $x^kq^{w(v)-k}$. Consequently $D_G(x,q)$ is coefficientwise bounded above by $\DCW_G(x+q,q)$. In degree two in $x$, the deficit is exactly the number of pairs $(v,\{i,j\})$ with missing bottom, at each bottom weight separately.
+(A) implies (B) by setting $q=1$; (B) implies (C) by comparing the coefficient of $x^2$; (C) implies (D) by nonnegativity of the deficit.
+
+Assume (D). We prove $v\setminus S\in F$ for every $S\subseteq A(v)$ by induction on $|S|$. Sizes zero and one are immediate; size two is (D). For larger $S$, choose distinct $i,j\in S$ and put $u=v\setminus(S\setminus\{i,j\})$. Induction gives $u,u\setminus\{i\},u\setminus\{j\}\in F$. Applying (D) at $u$ gives $u\setminus\{i,j\}=v\setminus S\in F$. Applying this conclusion to every subset of $S$ gives the entire cube. Thus every candidate $(v,S)$ contributes, and
+\[
+ D_G(x,q)=\sum_{v\in F}\sum_{k=0}^{r(v)}\binom{r(v)}{k}x^kq^{w(v)-k}
+ =\sum_{v\in F}(x+q)^{r(v)}q^{w(v)-r(v)}.
+\]
+This is (A).
+\end{proof}
+Every downset in the fixed coordinate embedding satisfies (D); containment is strict for embedded vertex sets: $F=\{000,100,110\}$ satisfies (D) but lacks $010$. This example does not distinguish abstract graph isomorphism classes, since $P_3$ is itself isomorphic to a daisy cube.
+\section{Supplementary structural consequences}
+\begin{theorem}\label{sink}
+Under (D), each connected component has exactly one sink $s$ (a vertex with $r(s)=0$). Every vertex $v$ in that component has a descending path to $s$, and $d_G(v,s)=w(v)-w(s)=d_H(v,s)$.
+\end{theorem}
+\begin{proof}
+Induct on weight to show that all maximal descending paths from $v$ end at a single sink. A sink is immediate. If first steps differ, (D) gives a common lower neighbor. By induction both first-step vertices have the same sink as their common lower neighbor. Therefore the endpoint is independent of the first step and all subsequent choices. Adjacent vertices share a sink, since the higher can descend to the lower. Hence each component has a unique sink. The descending path attains the ambient Hamming lower bound on path length, proving the distance claim.
+\end{proof}
+When $G$ is connected and contains $0^n$, its intrinsic distances from $0^n$ thus coincide with ambient weights. No assertion about all vertex-pair distances is made.
+\begin{corollary}
+Under (D), $C_G(-1)$ equals the number of connected components.
+\end{corollary}
+\begin{proof}
+By Theorem~\ref{main}, $C_G(-1)=\sum_v(1-1)^{r(v)}$, where the term for $r(v)=0$ is 1. Apply Theorem~\ref{sink}.
+\end{proof}
+The converse fails even for a connected induced graph containing $0^n$. The vertex set
+\[\{000,100,110,111,011\}\]
+induces $P_5$. Its cube polynomial is $5+4x$, so $C_G(-1)=1$, but $111$ has two downward directions whose common bottom $010$ is missing. This is not a solution to Mollard's second question.
+\begin{theorem}\label{collapse}
+Under (D), the cubical complex of each connected component is collapsible to a single vertex. The assertion for disconnected graphs is componentwise.
+\end{theorem}
+\begin{proof}
+Choose a nonsink vertex $v$ of maximum weight among nonsinks. No neighbor above $v$ exists, as it would itself be a nonsink of larger weight. All cubes containing $v$ are precisely the faces of the cube indexed by $A(v)$ that contain $v$, by Theorem~\ref{main}. Fix $i\in A(v)$. Pair each face with top $v$ and free set $S$ not containing $i$ with the face having free set $S\cup\{i\}$. Process pairs in decreasing $|S|$. At the moment of removal the first face has only its paired face as a strict coface: all larger free sets except the paired one have already been removed, and no face outside this cube contains $v$. These are elementary cubical collapses. All and only faces containing $v$ are removed.
+
+After deleting $v$, no surviving vertex loses a downward neighbor. A missing square bottom created by the deletion would require a neighbor above $v$, which is impossible. Hence (D) is preserved. Repeat until only sinks remain. Elementary collapses preserve component count, and Theorem~\ref{sink} gives one sink in each original component. This establishes the componentwise claim.
+\end{proof}
+\section{Membership-query complexity}
+For an explicitly supplied vertex set supporting constant-time membership queries, checking (D) requires $O(n^2|F|)$ queries, including downward-neighbor tests. Direct ambient cube enumeration has $3^n$ candidates; checking every vertex in every candidate uses at most $4^n$ membership queries. These are query counts, not bit-complexity or measured speedup claims. Under (D) the coefficients can be accumulated from binomial expansions without enumerating high-dimensional cubes.
+\section{Computational evidence and limitations}
+The unchanged author Python script enumerates coordinate cubes independently of the downward-degree expression, checks coefficient deficits and the equivalence, and tests sink uniqueness and distances and the Euler characteristic when (D) holds. The following counts refer to vertex sets, not isomorphism classes. ``No'' denotes failure of the identity, not a verification failure.
+\begin{center}\small
+\begin{tabular}{rrrr}\toprule
+$n$ & Nonempty sets & Yes & No\\\midrule
+0&1&1&0\\1&3&3&0\\2&15&14&1\\3&255&182&73\\4&65,535&20,969&44,566\\\midrule
+Total&65,809&21,169&44,640\\\bottomrule
+\end{tabular}\qquad
+\begin{tabular}{rrrr}\toprule
+$n$ & Seeded trials & Yes & No\\\midrule
+5&200&133&67\\6&200&121&79\\7&200&115&85\\8&200&109&91\\\midrule
+Total&800&478&322\\\bottomrule
+\end{tabular}
+\end{center}
+All 66,609 checks agree. The author-supplied Windows transcript reports Python 3.12.10, source hash match, exit code zero and exact reference-output match (4.748 seconds). The publication preparation also reran the author script and compared its output byte-for-byte with the reference log. The Windows transcript is not an independent Windows audit.
+
+A separate AI audit of v0.4 reports mathematical PASS for all three theorems, independent implementation and reproduction PASS, and no discrepancies in all 65,535 nonempty dimension-four sets. It also reports counting cube embeddings divided by the automorphism count on smaller exhaustive and higher-dimensional sampled sets, and explicit elementary-collapse checks through dimension six on finite samples. The author script does not explicitly validate collapse sequences. The editorial revisions since v0.4 have not been independently re-audited. Finite tests support, but do not replace, the general proofs.
+\section{Relationship to prior work}
+The main contribution is the local necessary-and-sufficient criterion for the induced setting of the first question following (5.1) in Mollard~\cite{mollard}. Top/bottom counting is already present in that work (Proposition 2.1). Daisy cubes and their distance polynomials were studied by Klav\v zar and Mollard~\cite{daisy}; Zheng, Xie and Xu~\cite{zheng} address different polynomial characterizations of daisy cubes in the inspected version.
+The sink argument specializes Newman's termination/local-confluence principle~\cite{newman}. The downward-cube property for median graphs~\cite{median} and corner peeling~\cite{corner} are related established ideas. No priority claim is made for these methods or for the supplementary conclusions, and no equivalence with those established graph classes is asserted.
+
+The accessible preprint of Mollard was the basis for the question's scope. The full published version was inaccessible, and the literature search was partial. No identical main criterion was identified in the inspected material; this does not establish priority. No non-induced-subgraph result is claimed.
+\begin{thebibliography}{9}\small
+\bibitem{mollard} M. Mollard, \emph{Distance cube polynomials of Fibonacci and Lucas-run graphs}, arXiv:2410.19326v1, \url{https://arxiv.org/abs/2410.19326v1}. Published DOI: \href{https://doi.org/10.1016/j.dam.2025.06.040}{10.1016/j.dam.2025.06.040} (full published text not inspected).
+\bibitem{daisy} S. Klav\v zar and M. Mollard, \emph{Daisy cubes and distance cube polynomial}, \url{https://arxiv.org/abs/1705.08674}.
+\bibitem{zheng} X. Zheng, Y.-T. Xie and S.-J. Xu, \emph{Resolving problems on polynomial characterizations of daisy cubes and extensions}, arXiv:2603.29577v2, \url{https://arxiv.org/abs/2603.29577v2}.
+\bibitem{median} \emph{Medians in median graphs and their cube complexes in linear time}, DOI \href{https://doi.org/10.1016/j.jcss.2022.01.001}{10.1016/j.jcss.2022.01.001} (search preview only).
+\bibitem{corner} J. Chalopin, V. Chepoi, S. Moran and M. K. Warmuth, \emph{Unlabeled sample compression schemes and corner peelings for ample and maximum classes}, \url{https://arxiv.org/abs/1812.02099}.
+\bibitem{newman} Newman's lemma (termination and local confluence imply confluence), secondary source: \href{https://www.mpi-inf.mpg.de/fileadmin/inf/rg1/Documents/script1-7-Errata-Sup.pdf}{rewriting lecture notes, Lemma 1.6.6} (search excerpt only).
+\end{thebibliography}
+\noindent\textcopyright\ 2026 Ryutaro Yonezu. All rights reserved.\\
+\small NOT HUMAN PEER REVIEWED. NOVELTY INCONCLUSIVE. REFERENCES PARTIAL.
+\end{document}
